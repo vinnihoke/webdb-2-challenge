@@ -1,18 +1,19 @@
 const express = require("express");
-const knex = require("knex");
-const db = require("../data/db-config.js");
+const knex = require("../data/db-config.js");
 
 const router = express.Router();
 
+// Operational
 router.get("/", async (req, res) => {
   try {
     const cars = await knex.select("*").from("cars");
     res.status(200).json({ message: "Successfully retrieved all cars", cars });
   } catch (err) {
-    res.status(500).json({ error: err });
+    res.status(500).json({ error: err.message });
   }
 });
 
+// Operational
 router.get("/:id", async (req, res) => {
   try {
     const carByID = await knex
@@ -23,10 +24,11 @@ router.get("/:id", async (req, res) => {
       .status(200)
       .json({ message: "Successfully retrieved individual car", carByID });
   } catch (err) {
-    res.status(500).json({ error: err });
+    res.status(500).json({ error: err.message });
   }
 });
 
+// Operational
 router.post("/", async (req, res) => {
   try {
     const newCar = await knex
@@ -37,12 +39,13 @@ router.post("/", async (req, res) => {
       .select("*")
       .from("cars")
       .where("id", newCar[0]);
-    res.status(200).json({ message: "Successfully added new car", newCarByID });
+    res.status(201).json({ message: "Successfully added new car", newCarByID });
   } catch (err) {
-    res.status(500).json({ error: err });
+    res.status(500).json({ error: err.message });
   }
 });
 
+// Operational
 router.put("/:id", async (req, res) => {
   try {
     const update = await knex
@@ -52,10 +55,11 @@ router.put("/:id", async (req, res) => {
       .update(req.body);
     res.status(200).json({ message: "Successfully updated car", update });
   } catch (err) {
-    res.status(500).json({ error: err });
+    res.status(500).json({ error: err.message });
   }
 });
 
+// Operational
 router.delete("/:id", async (req, res) => {
   try {
     const deleted = await knex
@@ -65,7 +69,7 @@ router.delete("/:id", async (req, res) => {
       .del();
     res.status(200).json({ message: "Successfully deleted car", deleted });
   } catch (err) {
-    res.status(500).json({ error: err });
+    res.status(500).json({ error: err.message });
   }
 });
 
