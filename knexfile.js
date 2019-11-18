@@ -1,4 +1,4 @@
-module.export = {
+module.exports = {
   development: {
     client: "sqlite3",
     connection: {
